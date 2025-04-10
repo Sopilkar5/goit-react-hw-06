@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contactsSlice';
 import styles from './ContactForm.module.css';
+import { useEffect } from 'react';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -33,6 +34,9 @@ export default function ContactForm() {
       dispatch(addContact(newContact));
       resetForm();
       setStatus({ success: 'Contact successfully added!' });
+      setTimeout(() => {
+        setStatus({ success: null });
+      }, 1500);
     } catch (error) {
       setStatus({ error: error.message });
     } finally {
@@ -40,14 +44,18 @@ export default function ContactForm() {
     }
   };
 
+  useEffect(() => {
+    return () => {};
+  }, [contacts]);
+
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
-      validateOnBlur={true}   // Валідація при втраті фокусу
-      validateOnChange={false} // Вимкнення валідації при зміні
-      validateOnMount={false} // Вимкнення валідації при монтуванні
+      validateOnBlur={true}
+      validateOnChange={false}
+      validateOnMount={false}
     >
       {({ status, touched, errors }) => (
         <Form className={styles.form}>
