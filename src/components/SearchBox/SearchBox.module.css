@@ -1,0 +1,9 @@
+.searchBox {
+  background-color: #242424;
+    padding: 8px;
+    margin-bottom: 20px;
+    width: 300px;
+  }
+  .searchLabel{
+    color: aliceblue;
+  }
